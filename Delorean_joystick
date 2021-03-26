@@ -1,0 +1,88 @@
+/* Realizado por DErickus
+   erickuszeus@gmail.com
+   https://t.me/DErickus */
+
+#include <SoftwareSerial.h>
+SoftwareSerial BT(2, 3); // RX, TX
+
+#define enA 10
+#define in1 4
+#define in2 5
+
+#define in3 6
+#define in4 7
+#define enB 9
+
+int xAxis=140, yAxis=140;
+
+int motorSpeedA = 0;
+int motorSpeedB = 0;
+
+void setup() {
+pinMode(enA, OUTPUT);
+pinMode(enB, OUTPUT);
+pinMode(in1, OUTPUT);
+pinMode(in2, OUTPUT);
+pinMode(in3, OUTPUT);
+pinMode(in4, OUTPUT);
+Serial.begin(9600);
+BT.begin(9600); // Tasa de comunicación predeterminada del módulo Bluetooth
+delay(500);
+}
+
+void loop(){
+  while (BT.available() >= 2) {
+    xAxis = BT.read();
+    delay(10);
+    yAxis = BT.read();
+    /*Serial.print(xAxis);
+    Serial.print(",");
+    Serial.println(yAxis);*/
+  }
+  
+ /* Serial.print("eje x: ");
+  Serial.print(xAxis);
+  Serial.print(", ");
+  Serial.print("eje y: ");
+  Serial.print(yAxis);
+  Serial.print("    ");
+  delay(10);*/
+  if(xAxis==140 && yAxis==140){
+    Serial.println("Alto");
+    delay(50);
+  }
+  if(xAxis==60 && yAxis==0){
+    Serial.println("Derecha");
+    delay(50);
+  }
+  if(xAxis==220 && yAxis==0){
+    Serial.println("Izquierda");
+    delay(50);
+  }
+  if(xAxis==0 && yAxis==60){
+    Serial.println("Adelante");
+    delay(50);
+  }
+  if(xAxis==0 && yAxis==220){
+    Serial.println("Atrás");
+    delay(50);
+  }
+  /*AQUI SE CALCULARAN LAS DIAGONALES*/
+  if(xAxis==60 && yAxis==60){
+    Serial.println("ADELANTE IZQUIERDA");
+    delay(50);
+  }
+  if(xAxis==220 && yAxis==60){
+    Serial.println("ADELANTE DERECHA");
+    delay(50);
+  }
+  if(xAxis==60 && yAxis==220){
+    Serial.println("ATRÁS IZQUIERDA");
+    delay(50);
+  }
+  if(xAxis==220 && yAxis==220){
+    Serial.println("ATRÁS DERECHA");
+    delay(50);
+  }
+  
+}
